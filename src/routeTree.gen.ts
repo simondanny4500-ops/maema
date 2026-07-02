@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as CommandeSuccesRouteImport } from './routes/commande-succes'
 import { Route as PromotionsRouteImport } from './routes/promotions'
 import { Route as PanierRouteImport } from './routes/panier'
 import { Route as FaqRouteImport } from './routes/faq'
@@ -30,6 +31,11 @@ import { Route as AdminCategoriesRouteImport } from './routes/admin/categories'
 import { Route as AuthenticatedCompteIndexRouteImport } from './routes/_authenticated/compte.index'
 import { Route as AuthenticatedCompteCommandesRouteImport } from './routes/_authenticated/compte.commandes'
 
+const CommandeSuccesRoute = CommandeSuccesRouteImport.update({
+  id: '/commande-succes',
+  path: '/commande-succes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PromotionsRoute = PromotionsRouteImport.update({
   id: '/promotions',
   path: '/promotions',
@@ -139,6 +145,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/boutique': typeof BoutiqueRoute
   '/checkout': typeof CheckoutRoute
+  '/commande-succes': typeof CommandeSuccesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/panier': typeof PanierRoute
@@ -159,6 +166,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/boutique': typeof BoutiqueRoute
   '/checkout': typeof CheckoutRoute
+  '/commande-succes': typeof CommandeSuccesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/panier': typeof PanierRoute
@@ -182,6 +190,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/boutique': typeof BoutiqueRoute
   '/checkout': typeof CheckoutRoute
+  '/commande-succes': typeof CommandeSuccesRoute
   '/contact': typeof ContactRoute
   '/faq': typeof FaqRoute
   '/panier': typeof PanierRoute
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/boutique'
     | '/checkout'
+    | '/commande-succes'
     | '/contact'
     | '/faq'
     | '/panier'
@@ -225,6 +235,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/boutique'
     | '/checkout'
+    | '/commande-succes'
     | '/contact'
     | '/faq'
     | '/panier'
@@ -247,6 +258,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/boutique'
     | '/checkout'
+    | '/commande-succes'
     | '/contact'
     | '/faq'
     | '/panier'
@@ -270,6 +282,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   BoutiqueRoute: typeof BoutiqueRoute
   CheckoutRoute: typeof CheckoutRoute
+  CommandeSuccesRoute: typeof CommandeSuccesRoute
   ContactRoute: typeof ContactRoute
   FaqRoute: typeof FaqRoute
   PanierRoute: typeof PanierRoute
@@ -312,6 +325,13 @@ declare module '@tanstack/react-router' {
       path: '/checkout'
       fullPath: '/checkout'
       preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/commande-succes': {
+      id: '/commande-succes'
+      path: '/commande-succes'
+      fullPath: '/commande-succes'
+      preLoaderRoute: typeof CommandeSuccesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/boutique': {
@@ -465,6 +485,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   BoutiqueRoute: BoutiqueRoute,
   CheckoutRoute: CheckoutRoute,
+  CommandeSuccesRoute: CommandeSuccesRoute,
   ContactRoute: ContactRoute,
   FaqRoute: FaqRoute,
   PanierRoute: PanierRoute,

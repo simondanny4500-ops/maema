@@ -22,7 +22,7 @@ const schema = z.object({
 });
 
 function Checkout() {
-  const { items, subtotal, clear, count } = useCart();
+  const { items, subtotal, count } = useCart();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [session, setSession] = useState<any>(null);
@@ -90,10 +90,21 @@ function Checkout() {
       line_total: i.price * i.quantity,
     }));
     await supabase.from("order_items").insert(orderItems);
+
+    const { data: checkoutData, error: checkoutError } =
+      await supabase.functions.invoke("create-checkout-session", {
+        body: { order_id: order.id },
+      });
+
     setLoading(false);
-    clear();
-    toast.success("Commande enregistrée ! (Le paiement Stripe sera activé prochainement.)");
-    navigate({ to: "/compte/commandes" });
+
+    if (checkoutError || !checkoutData?.url) {
+      toast.error("Impossible de lancer le paiement. Merci de réessayer.");
+      return;
+    }
+
+    // Cart is cleared once payment is actually confirmed, on /commande-succes.
+    window.location.href = checkoutData.url;
   };
 
   return (
@@ -128,8 +139,7 @@ function Checkout() {
             </h3>
             <div className="p-6 bg-muted/50 border border-border text-sm text-muted-foreground flex items-center gap-3">
               <Lock size={16} className="text-primary" />
-              Le paiement sécurisé Stripe (CB, Apple Pay, Google Pay, PayPal) sera activé à la mise en production.
-              Pour cette version de démonstration, votre commande sera enregistrée en statut « En attente ».
+              Vous allez être redirigé(e) vers la page de paiement sécurisée Stripe pour régler votre commande par carte bancaire.
             </div>
           </div>
         </div>
@@ -157,7 +167,7 @@ function Checkout() {
             disabled={loading}
             className="mt-6 w-full bg-primary text-primary-foreground py-4 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[color:var(--gold-deep)] transition-colors disabled:opacity-50"
           >
-            {loading ? "Traitement…" : `Confirmer · ${formatEUR(total)}`}
+            {loading ? "Traitement…" : `Payer · ${formatEUR(total)}`}
           </button>
         </aside>
       </form>
