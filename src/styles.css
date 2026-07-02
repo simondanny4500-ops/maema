@@ -1,0 +1,393 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@import "@fontsource/cormorant-garamond/400.css";
+@import "@fontsource/cormorant-garamond/500.css";
+@import "@fontsource/cormorant-garamond/600.css";
+@import "@fontsource/cormorant-garamond/700.css";
+@import "@fontsource/inter/300.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Memma & Maman — Design System
+ * Cream, nude, blush pink and discreet gold.
+ * Serif display (Cormorant Garamond) + Inter body.
+ */
+
+@theme inline {
+  --font-serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-gold: var(--gold);
+  --color-blush: var(--blush);
+  --color-nude: var(--nude);
+  --color-cream: var(--cream);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --radius: 0.375rem;
+
+  /* Signature palette */
+  --cream: oklch(0.985 0.008 82);
+  --nude: oklch(0.90 0.025 55);
+  --blush: oklch(0.93 0.035 25);
+  --gold: oklch(0.72 0.10 80);
+  --gold-deep: oklch(0.60 0.11 75);
+
+  --background: oklch(0.985 0.008 82);
+  --foreground: oklch(0.24 0.02 40);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.24 0.02 40);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.24 0.02 40);
+
+  --primary: oklch(0.72 0.10 80);           /* gold */
+  --primary-foreground: oklch(0.99 0.005 80);
+
+  --secondary: oklch(0.93 0.035 25);         /* blush */
+  --secondary-foreground: oklch(0.32 0.05 25);
+
+  --muted: oklch(0.955 0.012 70);
+  --muted-foreground: oklch(0.48 0.02 50);
+
+  --accent: oklch(0.90 0.025 55);            /* nude */
+  --accent-foreground: oklch(0.28 0.03 40);
+
+  --destructive: oklch(0.55 0.20 25);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.90 0.01 70);
+  --input: oklch(0.92 0.008 70);
+  --ring: oklch(0.72 0.10 80);
+
+  --chart-1: oklch(0.72 0.10 80);
+  --chart-2: oklch(0.75 0.06 25);
+  --chart-3: oklch(0.60 0.11 75);
+  --chart-4: oklch(0.55 0.05 30);
+  --chart-5: oklch(0.85 0.04 60);
+
+  --sidebar: oklch(0.98 0.008 80);
+  --sidebar-foreground: oklch(0.24 0.02 40);
+  --sidebar-primary: oklch(0.72 0.10 80);
+  --sidebar-primary-foreground: oklch(0.99 0.005 80);
+  --sidebar-accent: oklch(0.94 0.02 60);
+  --sidebar-accent-foreground: oklch(0.28 0.03 40);
+  --sidebar-border: oklch(0.90 0.01 70);
+  --sidebar-ring: oklch(0.72 0.10 80);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv01";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  ::selection {
+    background: var(--gold);
+    color: white;
+  }
+}
+
+@utility font-serif {
+  font-family: var(--font-serif);
+}
+@utility font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Elegant thin gold divider */
+@utility divider-gold {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold) 50%, transparent);
+}
+
+/* Premium hover for cards */
+@utility card-lift {
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 500ms;
+}
+@utility card-lift-hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -20px oklch(0.30 0.03 40 / 0.15);
+}
+
+/* ---------- Motion system ---------- */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-28px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+@utility animate-rise { animation: riseIn 800ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@utility animate-fade { animation: fadeIn 600ms ease-out both; }
+@utility animate-fade-up { animation: fadeInUp 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@utility animate-scale-in { animation: scaleIn 500ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@utility animate-slide-right { animation: slideInRight 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@utility animate-slide-left { animation: slideInLeft 700ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+@utility animate-float { animation: floaty 4s ease-in-out infinite; }
+
+@utility delay-100 { animation-delay: 100ms; }
+@utility delay-200 { animation-delay: 200ms; }
+@utility delay-300 { animation-delay: 300ms; }
+@utility delay-400 { animation-delay: 400ms; }
+@utility delay-500 { animation-delay: 500ms; }
+
+/* Scroll reveal — apply .reveal then toggle .is-visible via IntersectionObserver */
+@utility reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Underline reveal for links */
+@utility link-elegant {
+  position: relative;
+  display: inline-block;
+}
+
+/* Premium button micro-interactions */
+@utility btn-press {
+  transition: transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 300ms ease,
+              background-color 300ms ease,
+              color 300ms ease,
+              letter-spacing 300ms ease;
+}
+.btn-press:hover { letter-spacing: 0.22em; }
+.btn-press:active { transform: scale(0.97); }
+
+/* Soft hover lift for interactive tiles */
+@utility hover-lift {
+  transition: transform 500ms cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 500ms ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 45px -22px oklch(0.30 0.03 40 / 0.22);
+}
+
+@layer base {
+  a, button {
+    transition: color 300ms ease, background-color 300ms ease,
+                border-color 300ms ease, opacity 300ms ease,
+                transform 300ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  a:active, button:active { transform: scale(0.98); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ---------- Intro / Opening animation ---------- */
+@keyframes introRingIn {
+  0%   { opacity: 0; transform: scale(0.85) rotate(-6deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+@keyframes introLogoIn {
+  0%   { opacity: 0; transform: scale(0.7); filter: blur(6px); }
+  100% { opacity: 1; transform: scale(1); filter: blur(0); }
+}
+@keyframes introTaglineRise {
+  0%   { transform: translateY(120%); opacity: 0; letter-spacing: 0.75em; }
+  100% { transform: translateY(0); opacity: 1; letter-spacing: 0.55em; }
+}
+@keyframes introLineGrow {
+  0%   { transform: scaleX(0); opacity: 0; }
+  100% { transform: scaleX(1); opacity: 1; }
+}
+@keyframes introShimmer {
+  0%   { transform: translateX(-120%) skewX(-18deg); opacity: 0; }
+  40%  { opacity: 0.9; }
+  100% { transform: translateX(220%) skewX(-18deg); opacity: 0; }
+}
+@keyframes introPanelTop {
+  to { transform: translateY(-101%); }
+}
+@keyframes introPanelBottom {
+  to { transform: translateY(101%); }
+}
+@keyframes introMarkOut {
+  0%   { opacity: 1; transform: scale(1); filter: blur(0); }
+  100% { opacity: 0; transform: scale(1.08); filter: blur(4px); }
+}
+
+.intro-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 52%;
+  will-change: transform;
+}
+.intro-panel-top {
+  top: 0;
+  background: linear-gradient(180deg, oklch(0.985 0.008 82) 0%, oklch(0.94 0.025 60) 100%);
+}
+.intro-panel-bottom {
+  bottom: 0;
+  background: linear-gradient(0deg, oklch(0.985 0.008 82) 0%, oklch(0.94 0.025 60) 100%);
+}
+.intro-panel.leave.intro-panel-top {
+  animation: introPanelTop 900ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+.intro-panel.leave.intro-panel-bottom {
+  animation: introPanelBottom 900ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.intro-shimmer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 40%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--gold) 25%, transparent) 45%,
+    color-mix(in oklab, var(--gold) 55%, transparent) 50%,
+    color-mix(in oklab, var(--gold) 25%, transparent) 55%,
+    transparent 100%
+  );
+  filter: blur(10px);
+  animation: introShimmer 2000ms cubic-bezier(0.22, 1, 0.36, 1) 400ms both;
+  pointer-events: none;
+}
+
+.intro-ring {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklab, var(--gold) 55%, transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--gold) 15%, transparent),
+    0 30px 60px -30px color-mix(in oklab, var(--gold-deep) 45%, transparent),
+    inset 0 0 40px color-mix(in oklab, var(--gold) 12%, transparent);
+  animation: introRingIn 1200ms cubic-bezier(0.22, 1, 0.36, 1) 150ms both;
+}
+.intro-ring::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  border-radius: 9999px;
+  border: 1px solid color-mix(in oklab, var(--gold) 22%, transparent);
+  animation: introRingIn 1400ms cubic-bezier(0.22, 1, 0.36, 1) 250ms both;
+}
+.intro-logo {
+  animation: introLogoIn 900ms cubic-bezier(0.22, 1, 0.36, 1) 600ms both;
+}
+.intro-tagline {
+  display: inline-block;
+  animation: introTaglineRise 900ms cubic-bezier(0.22, 1, 0.36, 1) 1000ms both;
+  font-weight: 600;
+}
+.intro-line {
+  transform-origin: center;
+  animation: introLineGrow 700ms cubic-bezier(0.22, 1, 0.36, 1) 1250ms both;
+}
+.intro-mark-leave {
+  animation: introMarkOut 600ms cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-panel, .intro-shimmer, .intro-ring, .intro-logo,
+  .intro-tagline, .intro-line { animation: none !important; }
+}
+
+
