@@ -155,7 +155,7 @@ function ProductForm({ product, categories, onClose }: { product: any; categorie
         <div className="grid grid-cols-2 gap-4">
           <F label="Nom" value={f.name} onChange={(v) => setF({ ...f, name: v })} required />
           <F label="Slug (URL)" value={f.slug} onChange={(v) => setF({ ...f, slug: v })} placeholder="auto" />
-          <F label="Marque" value={f.brand} onChange={(v) => setF({ ...f, brand: v })} />
+          <F label="Inspiration" value={f.brand} onChange={(v) => setF({ ...f, brand: v })} />
           <F label="Référence (SKU)" value={f.sku} onChange={(v) => setF({ ...f, sku: v })} />
           <F label="Prix (€)" type="number" step="0.01" value={f.price} onChange={(v) => setF({ ...f, price: v })} required />
           <F label="Prix promo (€)" type="number" step="0.01" value={f.sale_price} onChange={(v) => setF({ ...f, sale_price: v })} />
