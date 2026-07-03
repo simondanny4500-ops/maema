@@ -26,6 +26,7 @@ function Checkout() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [session, setSession] = useState<any>(null);
+  const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [form, setForm] = useState({
     full_name: "", email: "", phone: "",
     address_line: "", city: "", postal_code: "", country: "France",
@@ -55,6 +56,10 @@ function Checkout() {
     if (!session) {
       toast.error("Connectez-vous pour finaliser votre commande.");
       navigate({ to: "/auth" });
+      return;
+    }
+    if (!acceptedTerms) {
+      toast.error("Merci d'accepter les Conditions Générales de Vente pour continuer.");
       return;
     }
     const parsed = schema.safeParse(form);
@@ -161,10 +166,24 @@ function Checkout() {
               <span>Total</span><span>{formatEUR(total)}</span>
             </div>
           </div>
+          <label className="mt-6 flex items-start gap-2.5 text-xs text-foreground/80 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              checked={acceptedTerms}
+              onChange={(e) => setAcceptedTerms(e.target.checked)}
+              className="mt-0.5 h-4 w-4 accent-primary shrink-0 cursor-pointer"
+            />
+            <span>
+              J'ai lu et j'accepte les{" "}
+              <Link to="/cgv" target="_blank" className="text-primary underline">Conditions Générales de Vente</Link>{" "}
+              et la{" "}
+              <Link to="/confidentialite" target="_blank" className="text-primary underline">Politique de confidentialité</Link>.
+            </span>
+          </label>
           <button
             type="submit"
-            disabled={loading}
-            className="mt-6 w-full bg-primary text-primary-foreground py-4 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[color:var(--gold-deep)] transition-colors disabled:opacity-50"
+            disabled={loading || !acceptedTerms}
+            className="mt-4 w-full bg-primary text-primary-foreground py-4 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[color:var(--gold-deep)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading ? "Traitement…" : `Confirmer · ${formatEUR(total)}`}
           </button>

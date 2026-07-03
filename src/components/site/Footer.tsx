@@ -94,6 +94,14 @@ export function Footer() {
           <p className="tracking-wider">Livraison offerte dès 50 € · Paiement sécurisé</p>
         </div>
 
+        <div className="mt-6 pt-6 border-t border-border/60 flex flex-wrap justify-center gap-x-6 gap-y-2 text-xs text-muted-foreground">
+          <Link to="/cgv" className="hover:text-primary transition-colors">Conditions Générales de Vente</Link>
+          <Link to="/confidentialite" className="hover:text-primary transition-colors">Politique de confidentialité</Link>
+          <Link to="/cookies" className="hover:text-primary transition-colors">Politique de cookies</Link>
+          <Link to="/mentions-legales" className="hover:text-primary transition-colors">Mentions légales</Link>
+          <Link to="/retractation" className="hover:text-primary transition-colors">Formulaire de rétractation</Link>
+        </div>
+
       </div>
     </footer>
   );
