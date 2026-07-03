@@ -27,7 +27,7 @@ export function ProductCard({ product, index = 0 }: { product: ProductCardData; 
       className="group block animate-rise"
       style={{ animationDelay: `${Math.min(index * 60, 400)}ms` }}
     >
-      <div className="relative overflow-hidden bg-[oklch(0.96_0.015_60)] aspect-[4/5] rounded-sm">
+      <div className="relative overflow-hidden bg-[oklch(0.96_0.015_60)] aspect-[4/5] rounded-sm shadow-[0_0_0_0_rgba(120,90,50,0)] transition-shadow duration-500 group-hover:shadow-[0_18px_40px_-18px_rgba(120,90,50,0.35)]">
         {image ? (
           <img
             src={image}

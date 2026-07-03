@@ -1,5 +1,5 @@
 import { Link, useRouter } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, ShoppingBag, User, X } from "lucide-react";
 import { useCart } from "@/lib/cart";
 import { Logo } from "@/components/site/Logo";
@@ -18,7 +18,19 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState<AuthUser | null>(null);
+  const [bump, setBump] = useState(false);
+  const prevCount = useRef(count);
   const router = useRouter();
+
+  useEffect(() => {
+    if (count > prevCount.current) {
+      setBump(true);
+      const t = setTimeout(() => setBump(false), 500);
+      prevCount.current = count;
+      return () => clearTimeout(t);
+    }
+    prevCount.current = count;
+  }, [count]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -49,7 +61,7 @@ export function Header() {
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-6 px-5 md:px-10 h-20 md:h-24">
+      <div className="relative max-w-7xl mx-auto flex items-center justify-between gap-6 px-5 md:px-10 h-20 md:h-24">
         <button
           type="button"
           className="md:hidden text-foreground/70 hover:text-primary transition-colors"
@@ -74,7 +86,7 @@ export function Header() {
           ))}
         </nav>
 
-        <Link to="/" className="flex-1 md:flex-none flex justify-center md:absolute md:left-1/2 md:-translate-x-1/2">
+        <Link to="/" className="absolute left-1/2 -translate-x-1/2 flex items-center">
           <Logo className="text-lg md:text-xl" />
         </Link>
 
@@ -91,9 +103,17 @@ export function Header() {
             className="relative text-foreground/70 hover:text-primary transition-colors"
             aria-label="Panier"
           >
-            <ShoppingBag size={20} strokeWidth={1.5} />
+            <ShoppingBag
+              size={20}
+              strokeWidth={1.5}
+              className={`transition-transform duration-300 ${bump ? "scale-125 text-primary" : "scale-100"}`}
+            />
             {count > 0 && (
-              <span className="absolute -top-2 -right-2 h-5 min-w-5 px-1 rounded-full bg-primary text-primary-foreground text-[10px] font-semibold flex items-center justify-center animate-fade">
+              <span
+                className={`absolute -top-2 -right-2 h-5 min-w-5 px-1 rounded-full bg-primary text-primary-foreground text-[10px] font-semibold flex items-center justify-center transition-transform duration-300 ${
+                  bump ? "scale-125" : "scale-100"
+                }`}
+              >
                 {count}
               </span>
             )}

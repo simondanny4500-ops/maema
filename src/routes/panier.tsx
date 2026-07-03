@@ -61,10 +61,23 @@ function CartPage() {
             <div className="divider-gold my-3" />
             <Row label="Total" value={formatEUR(total)} bold />
           </div>
-          {shipping > 0 && (
-            <p className="mt-3 text-xs text-muted-foreground">
-              Plus que {formatEUR(50 - subtotal)} pour la livraison offerte !
-            </p>
+          {shipping > 0 ? (
+            <div className="mt-4">
+              <p className="text-xs text-muted-foreground mb-2">
+                Plus que <span className="text-primary font-medium">{formatEUR(50 - subtotal)}</span> pour la livraison offerte !
+              </p>
+              <div className="h-1.5 w-full bg-border/60 overflow-hidden rounded-full">
+                <div
+                  className="h-full bg-primary rounded-full transition-[width] duration-700 ease-out"
+                  style={{ width: `${Math.min(100, (subtotal / 50) * 100)}%` }}
+                />
+              </div>
+            </div>
+          ) : (
+            <div className="mt-4 flex items-center gap-2 text-xs text-primary animate-fade">
+              <span className="inline-block h-1.5 w-full bg-primary rounded-full" />
+              <span className="whitespace-nowrap font-medium">Livraison offerte 🎉</span>
+            </div>
           )}
           <Link
             to="/checkout"

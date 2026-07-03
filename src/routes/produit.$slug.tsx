@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useCart, formatEUR } from "@/lib/cart";
 import { ProductCard } from "@/components/site/ProductCard";
 import { toast } from "sonner";
-import { Minus, Plus, ShoppingBag, Truck, RotateCcw, ShieldCheck } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Truck, RotateCcw, ShieldCheck, Check } from "lucide-react";
 
 export const Route = createFileRoute("/produit/$slug")({
   loader: async ({ params }) => {
@@ -43,6 +43,7 @@ function ProductPage() {
   const [qty, setQty] = useState(1);
   const [imageIdx, setImageIdx] = useState(0);
   const { add } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
   const price = product.sale_price ?? product.price;
   const image = product.images[imageIdx] ?? product.images[0] ?? "";
 
@@ -68,6 +69,8 @@ function ProductPage() {
     }
     add({ id: product.id, slug: product.slug, name: product.name, price, image }, qty);
     toast.success(`${product.name} ajouté au panier`);
+    setJustAdded(true);
+    window.setTimeout(() => setJustAdded(false), 1200);
   };
 
   return (
@@ -140,10 +143,21 @@ function ProductPage() {
               <button
                 onClick={addToCart}
                 disabled={product.stock <= 0}
-                className="flex-1 flex items-center justify-center gap-3 bg-primary text-primary-foreground py-4 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[color:var(--gold-deep)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className={`flex-1 flex items-center justify-center gap-3 bg-primary text-primary-foreground py-4 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[color:var(--gold-deep)] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
+                  justAdded ? "scale-[0.97]" : "scale-100"
+                }`}
               >
-                <ShoppingBag size={16} />
-                {product.stock <= 0 ? "Rupture de stock" : "Ajouter au panier"}
+                {justAdded ? (
+                  <>
+                    <Check size={16} className="animate-fade" />
+                    Ajouté
+                  </>
+                ) : (
+                  <>
+                    <ShoppingBag size={16} />
+                    {product.stock <= 0 ? "Rupture de stock" : "Ajouter au panier"}
+                  </>
+                )}
               </button>
             </div>
 
