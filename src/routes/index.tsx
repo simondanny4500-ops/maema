@@ -85,7 +85,7 @@ function Home() {
       </section>
 
       {/* USP BAR */}
-      <section className="border-y border-border/60 bg-[oklch(0.97_0.012_75)]">
+      <section className="border-y border-border/60 bg-[oklch(0.97_0.012_75)] reveal">
         <div className="max-w-7xl mx-auto px-5 md:px-10 py-8 grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
           {[
             { icon: Truck, title: "Livraison offerte", sub: "Dès 50 € d'achat" },
@@ -105,7 +105,7 @@ function Home() {
 
       {/* CATEGORIES */}
       <section className="max-w-7xl mx-auto px-5 md:px-10 py-24">
-        <div className="text-center mb-14">
+        <div className="text-center mb-14 reveal">
           <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">Nos univers</p>
           <h2 className="font-serif text-4xl md:text-5xl">Explorer par catégorie</h2>
         </div>
@@ -115,8 +115,8 @@ function Home() {
               key={c.slug}
               to="/boutique"
               search={{ cat: c.slug }}
-              className="group relative overflow-hidden aspect-[3/4] block animate-rise"
-              style={{ animationDelay: `${i * 80}ms` }}
+              className="group relative overflow-hidden aspect-[3/4] block reveal"
+              style={{ transitionDelay: `${i * 90}ms` }}
             >
               <img
                 src={c.image}
@@ -139,13 +139,15 @@ function Home() {
       {/* FEATURED PRODUCTS */}
       {featured.length > 0 && (
         <section className="max-w-7xl mx-auto px-5 md:px-10 pb-24">
-          <div className="text-center mb-14">
+          <div className="text-center mb-14 reveal">
             <p className="text-xs uppercase tracking-[0.3em] text-primary mb-3">Coup de cœur</p>
             <h2 className="font-serif text-4xl md:text-5xl">Notre sélection</h2>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-10">
             {featured.map((p, i) => (
-              <ProductCard key={p.id} product={p} index={i} />
+              <div key={p.id} className="reveal" style={{ transitionDelay: `${Math.min(i * 90, 360)}ms` }}>
+                <ProductCard product={p} index={i} />
+              </div>
             ))}
           </div>
           <div className="text-center mt-14">
@@ -162,7 +164,7 @@ function Home() {
 
       {/* BRAND STORY */}
       <section className="bg-[oklch(0.94_0.025_50)] py-24">
-        <div className="max-w-4xl mx-auto px-5 md:px-10 text-center animate-rise">
+        <div className="max-w-4xl mx-auto px-5 md:px-10 text-center reveal">
           <p className="text-xs uppercase tracking-[0.3em] text-primary mb-4">L'histoire Memma & Maman</p>
           <h2 className="font-serif text-4xl md:text-5xl leading-tight">
             Le parfum rare, <em className="text-primary">réinventé</em>.
