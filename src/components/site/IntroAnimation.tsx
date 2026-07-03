@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import logo from "@/assets/logo.png";
+import { Logo } from "@/components/site/Logo";
 
 const STORAGE_KEY = "mm_intro_seen_v1";
 
@@ -48,12 +48,10 @@ export function IntroAnimation() {
 
       {/* Center mark */}
       <div className={`relative flex flex-col items-center ${leaving ? "intro-mark-leave" : "intro-mark-in"}`}>
-        <div className="intro-ring">
-          <img src={logo} alt="" className="h-24 md:h-32 w-auto intro-logo" />
-        </div>
-        <div className="mt-8 overflow-hidden">
-          <p className="intro-tagline text-[10px] md:text-xs uppercase tracking-[0.55em] text-primary">
-            Memma <span className="opacity-60">&amp;</span> Maman
+        <Logo className="intro-logo text-3xl md:text-5xl" />
+        <div className="mt-6 overflow-hidden">
+          <p className="intro-tagline text-[10px] md:text-xs uppercase tracking-[0.55em] text-muted-foreground">
+            Parfums d'inspiration
           </p>
         </div>
         <div className="mt-3 h-px w-24 bg-gradient-to-r from-transparent via-primary to-transparent intro-line" />

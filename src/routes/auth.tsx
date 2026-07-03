@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
 import { toast } from "sonner";
-import logo from "@/assets/logo.png";
+import { Logo } from "@/components/site/Logo";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({ meta: [{ title: "Connexion — Memma & Maman" }] }),
@@ -58,7 +58,7 @@ function Auth() {
       <div className="hidden md:block relative bg-[oklch(0.94_0.03_25)]">
         <div className="absolute inset-0 flex items-center justify-center p-10">
           <div className="text-center animate-rise">
-            <img src={logo} alt="Memma & Maman" className="h-14 mx-auto mb-8" />
+            <Logo className="text-2xl mb-8" />
             <p className="font-serif text-3xl italic text-foreground/80 leading-snug">
               « Prendre soin de soi,<br />c'est un acte d'amour. »
             </p>
@@ -68,7 +68,7 @@ function Auth() {
       <div className="flex items-center justify-center px-5 py-16">
         <div className="w-full max-w-sm animate-fade">
           <Link to="/" className="md:hidden block text-center mb-8">
-            <img src={logo} alt="Memma & Maman" className="h-10 mx-auto" />
+            <Logo className="text-lg" />
           </Link>
           <h1 className="font-serif text-4xl mb-2">{mode === "signin" ? "Bonjour" : "Bienvenue"}</h1>
           <p className="text-muted-foreground text-sm mb-8">

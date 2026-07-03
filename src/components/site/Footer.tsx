@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Instagram, Facebook, Mail } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import logo from "@/assets/logo.png";
+import { Logo } from "@/components/site/Logo";
 
 export function Footer() {
   const [email, setEmail] = useState("");
@@ -28,7 +28,7 @@ export function Footer() {
       <div className="max-w-7xl mx-auto px-5 md:px-10 py-16">
         <div className="grid gap-12 md:grid-cols-4">
           <div className="md:col-span-1">
-            <img src={logo} alt="Memma & Maman" className="h-12 mb-5" />
+            <Logo className="text-xl mb-5" />
             <p className="text-sm text-muted-foreground leading-relaxed">
               Parfums d'inspiration, formulés en Europe. Des fragrances élégantes qui rappellent
               les grands classiques — à un prix juste, sans marque copiée, sans contrefaçon.

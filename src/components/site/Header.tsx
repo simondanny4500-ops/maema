@@ -2,7 +2,7 @@ import { Link, useRouter } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, ShoppingBag, User, X } from "lucide-react";
 import { useCart } from "@/lib/cart";
-import logo from "@/assets/logo.png";
+import { Logo } from "@/components/site/Logo";
 import { supabase } from "@/integrations/supabase/client";
 import type { User as AuthUser } from "@supabase/supabase-js";
 
@@ -75,7 +75,7 @@ export function Header() {
         </nav>
 
         <Link to="/" className="flex-1 md:flex-none flex justify-center md:absolute md:left-1/2 md:-translate-x-1/2">
-          <img src={logo} alt="Memma & Maman" className="h-9 md:h-11 w-auto" />
+          <Logo className="text-lg md:text-xl" />
         </Link>
 
         <div className="flex items-center gap-4 md:gap-5">

@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useState } from "react";
-import logo from "@/assets/logo.png";
+import { Logo } from "@/components/site/Logo";
 
 export const Route = createFileRoute("/admin")({
   ssr: false,
@@ -42,7 +42,7 @@ function AdminLayout() {
     <div className="min-h-screen flex bg-[oklch(0.97_0.008_75)]">
       <aside className={`fixed md:sticky top-0 h-screen w-64 bg-card border-r border-border flex flex-col z-40 transition-transform ${open ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}>
         <div className="p-5 border-b border-border">
-          <img src={logo} alt="Memma & Maman" className="h-8" />
+          <Logo className="text-base" />
           <p className="text-[10px] uppercase tracking-[0.25em] text-primary mt-2">Administration</p>
         </div>
         <nav className="flex-1 p-3 space-y-1">
@@ -70,7 +70,7 @@ function AdminLayout() {
       <div className="flex-1 min-w-0">
         <div className="md:hidden bg-card border-b border-border px-4 py-3 flex justify-between items-center">
           <button onClick={() => setOpen(v => !v)}>{open ? <X size={20} /> : <Menu size={20} />}</button>
-          <img src={logo} alt="" className="h-6" />
+          <Logo className="text-sm" />
         </div>
         <main className="p-6 md:p-10">
           <Outlet />
