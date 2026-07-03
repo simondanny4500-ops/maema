@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { ProductCard } from "@/components/site/ProductCard";
+import { useParallax } from "@/hooks/use-parallax";
 import { ArrowRight, Sparkles, Truck, ShieldCheck, Heart } from "lucide-react";
 import hero from "@/assets/hero.jpg";
 import catParfums from "@/assets/cat-parfums.jpg";
@@ -21,7 +23,62 @@ const CATEGORIES = [
 ];
 
 
+function BrandStorySection({ image }: { image: string }) {
+  const imgRef = useParallax<HTMLImageElement>(0.3);
+
+  return (
+    <section className="relative min-h-[85vh] overflow-hidden flex items-center justify-center">
+      <div className="absolute inset-0 overflow-hidden">
+        <img ref={imgRef} src={image} alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-black/55" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30" />
+      </div>
+
+      <div className="relative max-w-3xl mx-auto px-5 md:px-10 text-center text-white reveal">
+        <p className="text-xs uppercase tracking-[0.35em] text-[oklch(0.85_0.08_80)] mb-5">
+          L'histoire Memma &amp; Maman
+        </p>
+        <h2 className="font-serif text-4xl md:text-6xl leading-tight">
+          Le parfum rare, <em className="text-[oklch(0.85_0.08_80)]">réinventé</em>.
+        </h2>
+        <p className="mt-8 text-base md:text-lg text-white/80 leading-relaxed max-w-xl mx-auto">
+          Née de la passion d'une mère et de sa fille pour les grandes fragrances,
+          Memma & Maman crée avec ses partenaires parfumeurs européens des parfums d'inspiration
+          fidèles aux plus beaux classiques — à un prix qui rend enfin le luxe accessible.
+        </p>
+
+        <Link
+          to="/a-propos"
+          className="inline-block mt-10 text-[oklch(0.85_0.08_80)] uppercase text-xs tracking-[0.25em] font-semibold border-b border-[oklch(0.85_0.08_80)] pb-1 hover:pb-2 transition-all"
+        >
+          En savoir plus
+        </Link>
+      </div>
+    </section>
+  );
+}
+
 function Home() {
+  const heroImgRef = useParallax<HTMLImageElement>(0.25);
+  const [heroFade, setHeroFade] = useState(0);
+
+  useEffect(() => {
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        const vh = window.innerHeight;
+        setHeroFade(Math.min(1, window.scrollY / (vh * 0.7)));
+        ticking = false;
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const { data: featured = [] } = useQuery({
     queryKey: ["featured-products"],
     queryFn: async () => {
@@ -39,8 +96,9 @@ function Home() {
     <>
       {/* HERO */}
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 overflow-hidden">
           <img
+            ref={heroImgRef}
             src={hero}
             alt=""
             fetchPriority="high"
@@ -50,7 +108,13 @@ function Home() {
         </div>
 
         <div className="relative max-w-7xl mx-auto px-5 md:px-10 min-h-[92vh] flex items-center">
-          <div className="max-w-xl animate-rise">
+          <div
+            className="max-w-xl animate-rise"
+            style={{
+              opacity: 1 - heroFade,
+              transform: `translateY(${heroFade * 40}px)`,
+            }}
+          >
             <p className="text-xs uppercase tracking-[0.3em] text-primary font-semibold mb-6">
               Parfums d'inspiration · Édition confidentielle
             </p>
@@ -162,29 +226,8 @@ function Home() {
         </section>
       )}
 
-      {/* BRAND STORY */}
-      <section className="bg-[oklch(0.94_0.025_50)] py-24">
-        <div className="max-w-4xl mx-auto px-5 md:px-10 text-center reveal">
-          <p className="text-xs uppercase tracking-[0.3em] text-primary mb-4">L'histoire Memma & Maman</p>
-          <h2 className="font-serif text-4xl md:text-5xl leading-tight">
-            Le parfum rare, <em className="text-primary">réinventé</em>.
-          </h2>
-          <p className="mt-8 text-lg text-foreground/70 leading-relaxed">
-            Née de la passion d'une mère et de sa fille pour les grandes fragrances,
-            Memma & Maman crée avec ses partenaires parfumeurs européens des parfums d'inspiration
-            fidèles aux plus beaux classiques — à un prix qui rend enfin le luxe accessible.
-            Aucune contrefaçon, aucune marque copiée : uniquement des créations originales,
-            légales et formulées avec exigence.
-          </p>
-
-          <Link
-            to="/a-propos"
-            className="inline-block mt-10 text-primary uppercase text-xs tracking-[0.2em] font-semibold border-b border-primary pb-1 hover:pb-2 transition-all"
-          >
-            En savoir plus
-          </Link>
-        </div>
-      </section>
+      {/* BRAND STORY — full-bleed editorial block */}
+      <BrandStorySection image={catParfums} />
     </>
   );
 }

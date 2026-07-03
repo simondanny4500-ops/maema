@@ -217,14 +217,14 @@
 /* Scroll reveal — apply .reveal then toggle .is-visible via IntersectionObserver */
 @utility reveal {
   opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 900ms cubic-bezier(0.22, 1, 0.36, 1),
-              transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform: translateY(64px) scale(0.98);
+  transition: opacity 1200ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1200ms cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
 .reveal.is-visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
 
 /* Underline reveal for links */

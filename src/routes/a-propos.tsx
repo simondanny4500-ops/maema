@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import hero from "@/assets/hero.jpg";
+import { useParallax } from "@/hooks/use-parallax";
 
 export const Route = createFileRoute("/a-propos")({
   head: () => ({
@@ -12,10 +13,12 @@ export const Route = createFileRoute("/a-propos")({
 });
 
 function About() {
+  const imgRef = useParallax<HTMLImageElement>(0.25);
+
   return (
     <>
       <section className="relative h-[60vh] overflow-hidden">
-        <img src={hero} alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <img ref={imgRef} src={hero} alt="" className="absolute inset-0 w-full h-full object-cover" />
         <div className="absolute inset-0 bg-black/25" />
         <div className="relative h-full flex items-center justify-center text-center text-white px-5">
           <div className="animate-rise">
