@@ -133,14 +133,15 @@ function Checkout() {
           </div>
 
           <div>
-  <h3 className="font-serif text-2xl mb-4 flex items-center gap-2">
-    <CreditCard size={20} className="text-primary" /> Paiement
-  </h3>
-  <div className="p-6 bg-muted/50 border border-border text-sm text-muted-foreground flex items-center gap-3">
-    <Lock size={16} className="text-primary" />
-    Après validation de votre commande, vous serez redirigé vers <strong>Stripe</strong> pour effectuer votre paiement de manière totalement sécurisée par carte bancaire, Apple Pay ou Google Pay.
-  </div>
+            <h3 className="font-serif text-2xl mb-4 flex items-center gap-2">
+              <CreditCard size={20} className="text-primary" /> Paiement
+            </h3>
+           <div className="p-6 bg-muted/50 border border-border text-sm text-muted-foreground flex items-center gap-3">
+  <Lock size={16} className="text-primary" />
+  Vous serez redirigé vers <strong>Stripe</strong> afin d'effectuer votre paiement de manière sécurisée (CB, Apple Pay, Google Pay,).
 </div>
+          </div>
+        </div>
 
         <aside className="bg-[oklch(0.96_0.015_70)] p-6 h-fit border border-border">
           <h3 className="font-serif text-2xl mb-4">Récapitulatif</h3>
