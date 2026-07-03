@@ -31,7 +31,6 @@ Deno.serve(async (req: Request) => {
       Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
     );
 
-    // The caller must be authenticated and must own the order.
     const authHeader = req.headers.get("Authorization");
     if (!authHeader) {
       return new Response(JSON.stringify({ error: "Non authentifié" }), {
@@ -95,9 +94,6 @@ Deno.serve(async (req: Request) => {
       apiVersion: "2024-06-20",
     });
 
-    // Build Stripe line items directly from the order items already stored in DB.
-    // Using price_data (rather than pre-created Stripe Products) means any number
-    // of products can be sold without having to create/maintain them in Stripe.
     const line_items = order.order_items.map((item: any) => ({
       price_data: {
         currency: "eur",

@@ -18,9 +18,7 @@ function CommandeSucces() {
   const [orderNumber, setOrderNumber] = useState<string | null>(null);
 
   useEffect(() => {
-    // Payment succeeded (Stripe redirected here) — the cart can now be emptied.
     clear();
-
     if (order_id) {
       supabase
         .from("orders")
@@ -33,21 +31,24 @@ function CommandeSucces() {
   }, [order_id]);
 
   return (
-    <section className="max-w-xl mx-auto px-5 py-32 text-center">
-      <CheckCircle2 className="mx-auto text-primary mb-6" size={56} />
-      <h1 className="font-serif text-3xl md:text-4xl mb-4">
+    <section className="max-w-2xl mx-auto px-5 md:px-10 py-24 text-center">
+      <CheckCircle2 size={72} className="mx-auto text-primary mb-6" />
+      <h1 className="font-serif text-4xl md:text-5xl mb-4">
         Merci pour votre commande !
       </h1>
-      <p className="text-muted-foreground mb-2">
+      <p className="text-lg text-foreground mb-2">
         {orderNumber
           ? `Commande n° ${orderNumber} confirmée.`
           : "Votre paiement a bien été reçu."}
       </p>
-      <p className="text-muted-foreground mb-8">
+      <p className="text-muted-foreground mb-10">
         Un email de confirmation vous sera envoyé. Vous pouvez suivre l'état
         de votre commande depuis votre compte.
       </p>
-      <Link to="/compte/commandes" className="text-primary underline">
+      <Link
+        to="/compte/commandes"
+        className="inline-block px-8 py-3 bg-primary text-primary-foreground hover:bg-primary/90 transition"
+      >
         Voir mes commandes
       </Link>
     </section>

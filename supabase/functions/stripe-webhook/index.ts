@@ -1,11 +1,3 @@
-// Supabase Edge Function: stripe-webhook
-// Receives events from Stripe (called BY Stripe, not by the frontend).
-// On checkout.session.completed, marks the matching order as paid.
-//
-// This function must be deployed with JWT verification DISABLED
-// (see supabase/config.toml: [functions.stripe-webhook] verify_jwt = false),
-// since Stripe cannot send a Supabase auth token.
-
 import { createClient } from "npm:@supabase/supabase-js@2.45.4";
 import Stripe from "npm:stripe@17.7.0";
 
@@ -78,7 +70,6 @@ Deno.serve(async (req: Request) => {
         break;
       }
       default:
-        // Ignore other event types.
         break;
     }
   } catch (error) {

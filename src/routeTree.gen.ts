@@ -9,11 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as CommandeSuccesRouteImport } from './routes/commande-succes'
 import { Route as PromotionsRouteImport } from './routes/promotions'
 import { Route as PanierRouteImport } from './routes/panier'
 import { Route as FaqRouteImport } from './routes/faq'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CommandeSuccesRouteImport } from './routes/commande-succes'
 import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as BoutiqueRouteImport } from './routes/boutique'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -31,11 +31,6 @@ import { Route as AdminCategoriesRouteImport } from './routes/admin/categories'
 import { Route as AuthenticatedCompteIndexRouteImport } from './routes/_authenticated/compte.index'
 import { Route as AuthenticatedCompteCommandesRouteImport } from './routes/_authenticated/compte.commandes'
 
-const CommandeSuccesRoute = CommandeSuccesRouteImport.update({
-  id: '/commande-succes',
-  path: '/commande-succes',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const PromotionsRoute = PromotionsRouteImport.update({
   id: '/promotions',
   path: '/promotions',
@@ -54,6 +49,11 @@ const FaqRoute = FaqRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommandeSuccesRoute = CommandeSuccesRouteImport.update({
+  id: '/commande-succes',
+  path: '/commande-succes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckoutRoute = CheckoutRouteImport.update({
@@ -320,18 +320,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/checkout': {
-      id: '/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof CheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/commande-succes': {
       id: '/commande-succes'
       path: '/commande-succes'
       fullPath: '/commande-succes'
       preLoaderRoute: typeof CommandeSuccesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/boutique': {

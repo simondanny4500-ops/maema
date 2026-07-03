@@ -22,7 +22,7 @@ const schema = z.object({
 });
 
 function Checkout() {
-  const { items, subtotal, count } = useCart();
+  const { items, subtotal, clear, count } = useCart();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [session, setSession] = useState<any>(null);
@@ -90,7 +90,6 @@ function Checkout() {
       line_total: i.price * i.quantity,
     }));
     await supabase.from("order_items").insert(orderItems);
-
     const { data: checkoutData, error: checkoutError } =
       await supabase.functions.invoke("create-checkout-session", {
         body: { order_id: order.id },
@@ -103,9 +102,9 @@ function Checkout() {
       return;
     }
 
-    // Cart is cleared once payment is actually confirmed, on /commande-succes.
     window.location.href = checkoutData.url;
   };
+
 
   return (
     <section className="max-w-6xl mx-auto px-5 md:px-10 py-16">
@@ -139,7 +138,8 @@ function Checkout() {
             </h3>
             <div className="p-6 bg-muted/50 border border-border text-sm text-muted-foreground flex items-center gap-3">
               <Lock size={16} className="text-primary" />
-              Vous allez être redirigé(e) vers la page de paiement sécurisée Stripe pour régler votre commande par carte bancaire.
+              Le paiement sécurisé Stripe (CB, Apple Pay, Google Pay, PayPal) sera activé à la mise en production.
+              Pour cette version de démonstration, votre commande sera enregistrée en statut « En attente ».
             </div>
           </div>
         </div>
@@ -167,7 +167,7 @@ function Checkout() {
             disabled={loading}
             className="mt-6 w-full bg-primary text-primary-foreground py-4 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[color:var(--gold-deep)] transition-colors disabled:opacity-50"
           >
-            {loading ? "Traitement…" : `Payer · ${formatEUR(total)}`}
+            {loading ? "Traitement…" : `Confirmer · ${formatEUR(total)}`}
           </button>
         </aside>
       </form>
