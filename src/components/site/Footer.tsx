@@ -81,8 +81,8 @@ export function Footer() {
               </button>
             </form>
             <div className="flex gap-3 mt-5 text-foreground/60">
-              <a href="#" aria-label="Instagram" className="hover:text-primary transition-colors"><Instagram size={18} /></a>
-              <a href="#" aria-label="Facebook" className="hover:text-primary transition-colors"><Facebook size={18} /></a>
+              <a href="https://www.instagram.com/memmaetmaman?igsh=MjR1NjhqNjNreTlq" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-primary transition-colors"><Instagram size={18} /></a>
+              <a href="https://www.facebook.com/share/1E5yDT4ZLZ/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-primary transition-colors"><Facebook size={18} /></a>
             </div>
           </div>
         </div>
