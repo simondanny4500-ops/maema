@@ -41,8 +41,10 @@ export function ProductCard({ product, index = 0 }: { product: ProductCardData; 
           </div>
         )}
 
+        <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[1100ms] ease-out bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
+
         {discount > 0 && (
-          <span className="absolute top-3 left-3 bg-primary text-primary-foreground text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded-sm">
+          <span className="shine absolute top-3 left-3 bg-primary text-primary-foreground text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded-sm">
             −{discount}%
           </span>
         )}

@@ -183,7 +183,7 @@ function Checkout() {
           <button
             type="submit"
             disabled={loading || !acceptedTerms}
-            className="mt-4 w-full bg-primary text-primary-foreground py-4 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[color:var(--gold-deep)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="mt-4 w-full bg-primary text-primary-foreground py-4 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[color:var(--gold-deep)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed shine"
           >
             {loading ? "Traitement…" : `Confirmer · ${formatEUR(total)}`}
           </button>

@@ -51,7 +51,7 @@ const QA = [
   },
   {
     q: "Puis-je modifier ma commande ?",
-    a: "Contactez-nous rapidement à contact@memmaetmaman.com. Si la commande n'est pas encore expédiée, nous ferons notre possible.",
+    a: "Contactez-nous rapidement à aide@maema.fr. Si la commande n'est pas encore expédiée, nous ferons notre possible.",
   },
 ];
 

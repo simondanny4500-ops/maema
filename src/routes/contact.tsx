@@ -57,9 +57,9 @@ function Contact() {
       <div className="grid md:grid-cols-3 gap-10">
         <div className="space-y-8">
           {[
-            { icon: Mail, title: "Email", value: "contact@memmaetmaman.com" },
-            { icon: Phone, title: "Téléphone", value: "+33 1 23 45 67 89" },
-            { icon: MapPin, title: "Adresse", value: "Paris, France" },
+            { icon: Mail, title: "Email", value: "aide@maema.fr" },
+            { icon: Phone, title: "Téléphone", value: "07 80 45 78 03" },
+            { icon: MapPin, title: "Adresse", value: "Colody, 22960 Plédran, France" },
           ].map((c) => (
             <div key={c.title} className="flex gap-4">
               <c.icon size={20} className="text-primary shrink-0 mt-1" strokeWidth={1.4} />

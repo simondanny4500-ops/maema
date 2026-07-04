@@ -192,6 +192,11 @@
   from { opacity: 0; transform: translateX(-28px); }
   to   { opacity: 1; transform: translateX(0); }
 }
+@keyframes confettiFall {
+  0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(105vh) rotate(360deg); opacity: 0.9; }
+}
+
 @keyframes shimmer {
   0% { background-position: -200% 0; }
   100% { background-position: 200% 0; }
@@ -253,6 +258,52 @@
   transform: translateY(-4px);
   box-shadow: 0 22px 45px -22px oklch(0.30 0.03 40 / 0.22);
 }
+
+/* Diagonal light sweep on hover — premium "shine" effect for CTAs and image cards */
+@utility shine {
+  position: relative;
+  overflow: hidden;
+}
+.shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    color-mix(in oklab, white 55%, transparent) 48%,
+    transparent 66%
+  );
+  transform: translateX(-120%);
+  pointer-events: none;
+}
+.shine:hover::after,
+.group:hover .shine::after {
+  transform: translateX(120%);
+  transition: transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Gentle pulsing glow — used for "just added" / success moments */
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--gold) 45%, transparent); }
+  50% { box-shadow: 0 0 0 10px color-mix(in oklab, var(--gold) 0%, transparent); }
+}
+@utility animate-glow { animation: glowPulse 1200ms cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* Pop-in — snappier scale entrance for badges, toasts, confirmations */
+@keyframes popIn {
+  0% { opacity: 0; transform: scale(0.6); }
+  60% { opacity: 1; transform: scale(1.08); }
+  100% { opacity: 1; transform: scale(1); }
+}
+@utility animate-pop { animation: popIn 500ms cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+/* Sparkle twinkle — tiny decorative accents */
+@keyframes sparkle {
+  0%, 100% { opacity: 0; transform: scale(0.5) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1) rotate(90deg); }
+}
+@utility animate-sparkle { animation: sparkle 2.2s ease-in-out infinite; }
 
 @layer base {
   a, button {

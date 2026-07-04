@@ -19,6 +19,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { IntroAnimation } from "@/components/site/IntroAnimation";
+import { CookieBanner } from "@/components/site/CookieBanner";
 
 
 
@@ -151,6 +152,7 @@ function RootComponent() {
           <Outlet />
         </SiteChrome>
         <Toaster />
+        <CookieBanner />
       </CartProvider>
     </QueryClientProvider>
   );

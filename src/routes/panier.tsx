@@ -32,7 +32,7 @@ function CartPage() {
       <div className="grid md:grid-cols-3 gap-10">
         <div className="md:col-span-2 space-y-4">
           {items.map((item) => (
-            <div key={item.id} className="flex gap-4 bg-card border border-border p-4 animate-fade">
+            <div key={item.id} className="flex gap-4 bg-card border border-border p-4 animate-fade hover-lift">
               <img src={item.image} alt={item.name} className="w-24 h-28 object-cover" />
               <div className="flex-1 flex flex-col justify-between">
                 <div>
@@ -41,11 +41,11 @@ function CartPage() {
                 </div>
                 <div className="flex items-center justify-between mt-3">
                   <div className="flex items-center border border-border">
-                    <button onClick={() => updateQty(item.id, item.quantity - 1)} className="px-2 py-1.5 hover:bg-muted"><Minus size={12} /></button>
-                    <span className="px-3 text-sm">{item.quantity}</span>
-                    <button onClick={() => updateQty(item.id, item.quantity + 1)} className="px-2 py-1.5 hover:bg-muted"><Plus size={12} /></button>
+                    <button onClick={() => updateQty(item.id, item.quantity - 1)} className="px-2 py-1.5 hover:bg-muted active:scale-90 transition-transform"><Minus size={12} /></button>
+                    <span key={item.quantity} className="px-3 text-sm animate-pop">{item.quantity}</span>
+                    <button onClick={() => updateQty(item.id, item.quantity + 1)} className="px-2 py-1.5 hover:bg-muted active:scale-90 transition-transform"><Plus size={12} /></button>
                   </div>
-                  <button onClick={() => remove(item.id)} className="text-muted-foreground hover:text-destructive p-2"><X size={16} /></button>
+                  <button onClick={() => remove(item.id)} className="text-muted-foreground hover:text-destructive hover:rotate-90 p-2 transition-all duration-300"><X size={16} /></button>
                 </div>
               </div>
               <div className="text-right font-medium">{formatEUR(item.price * item.quantity)}</div>
@@ -98,7 +98,7 @@ function Row({ label, value, bold }: { label: string; value: string; bold?: bool
   return (
     <div className={`flex justify-between ${bold ? "text-lg font-serif" : ""}`}>
       <span>{label}</span>
-      <span>{value}</span>
+      <span key={value} className={bold ? "animate-pop text-primary" : ""}>{value}</span>
     </div>
   );
 }

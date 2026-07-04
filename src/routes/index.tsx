@@ -131,7 +131,7 @@ function Home() {
             <div className="mt-9 flex flex-wrap gap-3">
               <Link
                 to="/boutique"
-                className="btn-press group inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[color:var(--gold-deep)]"
+                className="btn-press shine group inline-flex items-center gap-3 bg-primary text-primary-foreground px-8 py-4 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[color:var(--gold-deep)]"
               >
                 Découvrir la boutique
                 <ArrowRight size={16} className="transition-transform duration-500 group-hover:translate-x-1" />
@@ -179,7 +179,7 @@ function Home() {
               key={c.slug}
               to="/boutique"
               search={{ cat: c.slug }}
-              className="group relative overflow-hidden aspect-[3/4] block reveal"
+              className="shine group relative overflow-hidden aspect-[3/4] block reveal ring-1 ring-transparent hover:ring-primary/40 transition-[box-shadow] duration-500"
               style={{ transitionDelay: `${i * 90}ms` }}
             >
               <img
@@ -188,11 +188,11 @@ function Home() {
                 loading="lazy"
                 className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-5 md:p-6 text-white">
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent transition-opacity duration-500 group-hover:from-black/80" />
+              <div className="absolute inset-x-0 bottom-0 p-5 md:p-6 text-white transition-transform duration-500 group-hover:-translate-y-1">
                 <h3 className="font-serif text-2xl md:text-3xl">{c.name}</h3>
-                <p className="mt-1 text-xs uppercase tracking-widest opacity-80 flex items-center gap-2">
-                  Découvrir <ArrowRight size={12} className="transition-transform group-hover:translate-x-1" />
+                <p className="mt-1 text-xs uppercase tracking-widest opacity-80 flex items-center gap-2 group-hover:opacity-100 transition-opacity">
+                  Découvrir <ArrowRight size={12} className="transition-transform duration-300 group-hover:translate-x-1.5" />
                 </p>
               </div>
             </Link>

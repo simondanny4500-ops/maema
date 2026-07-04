@@ -143,7 +143,9 @@ function ProductPage() {
               <button
                 onClick={addToCart}
                 disabled={product.stock <= 0}
-                className={`flex-1 flex items-center justify-center gap-3 bg-primary text-primary-foreground py-4 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[color:var(--gold-deep)] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed ${
+                className={`flex-1 flex items-center justify-center gap-3 bg-primary text-primary-foreground py-4 text-xs uppercase tracking-[0.2em] font-semibold hover:bg-[color:var(--gold-deep)] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed shine ${
+                  justAdded ? "animate-glow" : ""
+                } ${
                   justAdded ? "scale-[0.97]" : "scale-100"
                 }`}
               >
