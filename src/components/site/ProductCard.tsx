@@ -1,5 +1,7 @@
 import { Link } from "@tanstack/react-router";
+import { Heart } from "lucide-react";
 import { formatEUR } from "@/lib/cart";
+import { useWishlist } from "@/lib/wishlist";
 
 export type ProductCardData = {
   id: string;
@@ -19,6 +21,8 @@ export function ProductCard({ product, index = 0 }: { product: ProductCardData; 
       ? Math.round(((product.price - product.sale_price) / product.price) * 100)
       : 0;
   const image = product.images[0] ?? "";
+  const { toggle, has } = useWishlist();
+  const saved = has(product.id);
 
   return (
     <Link
@@ -42,6 +46,20 @@ export function ProductCard({ product, index = 0 }: { product: ProductCardData; 
         )}
 
         <div className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-[1100ms] ease-out bg-gradient-to-r from-transparent via-white/20 to-transparent pointer-events-none" />
+
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            toggle({ id: product.id, slug: product.slug, name: product.name, price, image });
+          }}
+          aria-label={saved ? "Retirer des favoris" : "Ajouter aux favoris"}
+          className="absolute top-3 right-3 h-8 w-8 rounded-full bg-background/85 backdrop-blur flex items-center justify-center shadow-sm transition-transform hover:scale-110 active:scale-90 z-10"
+        >
+          <Heart
+            size={15}
+            className={saved ? "fill-primary text-primary animate-pop" : "text-foreground/60"}
+          />
+        </button>
 
         {discount > 0 && (
           <span className="shine absolute top-3 left-3 bg-primary text-primary-foreground text-[10px] font-semibold uppercase tracking-widest px-2.5 py-1 rounded-sm">

@@ -39,6 +39,7 @@ export function Footer() {
             <h4 className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-4">Boutique</h4>
             <ul className="space-y-2.5 text-sm text-foreground/70">
               <li><Link to="/boutique" className="hover:text-primary transition-colors">Toute la boutique</Link></li>
+              <li><Link to="/favoris" className="hover:text-primary transition-colors">Mes favoris</Link></li>
               <li><Link to="/boutique" search={{ cat: "parfums" }} className="hover:text-primary transition-colors">Parfums</Link></li>
               <li><Link to="/boutique" search={{ cat: "coffrets" }} className="hover:text-primary transition-colors">Coffrets</Link></li>
               <li><Link to="/boutique" search={{ cat: "nouveautes" }} className="hover:text-primary transition-colors">Nouveautés</Link></li>

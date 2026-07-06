@@ -1,7 +1,9 @@
 import { Link, useRouter } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
-import { Menu, ShoppingBag, User, X } from "lucide-react";
+import { Menu, ShoppingBag, User, X, Heart, Search } from "lucide-react";
 import { useCart } from "@/lib/cart";
+import { useWishlist } from "@/lib/wishlist";
+import { SearchOverlay } from "@/components/site/SearchOverlay";
 import { Logo } from "@/components/site/Logo";
 import { supabase } from "@/integrations/supabase/client";
 import type { User as AuthUser } from "@supabase/supabase-js";
@@ -15,6 +17,8 @@ const NAV = [
 
 export function Header() {
   const { count } = useCart();
+  const { count: wishlistCount } = useWishlist();
+  const [searchOpen, setSearchOpen] = useState(false);
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState<AuthUser | null>(null);
@@ -91,12 +95,31 @@ export function Header() {
         </Link>
 
         <div className="flex items-center gap-4 md:gap-5">
+          <button
+            onClick={() => setSearchOpen(true)}
+            className="text-foreground/70 hover:text-primary transition-colors"
+            aria-label="Rechercher"
+          >
+            <Search size={20} strokeWidth={1.5} />
+          </button>
           <Link
             to={user ? "/compte" : "/auth"}
             className="text-foreground/70 hover:text-primary transition-colors"
             aria-label={user ? "Mon compte" : "Se connecter"}
           >
             <User size={20} strokeWidth={1.5} />
+          </Link>
+          <Link
+            to="/favoris"
+            className="relative hidden sm:inline-flex text-foreground/70 hover:text-primary transition-colors"
+            aria-label="Mes favoris"
+          >
+            <Heart size={20} strokeWidth={1.5} />
+            {wishlistCount > 0 && (
+              <span className="absolute -top-2 -right-2 h-5 min-w-5 px-1 rounded-full bg-primary text-primary-foreground text-[10px] font-semibold flex items-center justify-center">
+                {wishlistCount}
+              </span>
+            )}
           </Link>
           <Link
             to="/panier"
@@ -133,9 +156,21 @@ export function Header() {
                 {n.label}
               </Link>
             ))}
+            <Link
+              to="/favoris"
+              className="py-3 px-2 text-foreground/80 hover:text-primary border-b border-border/30 flex items-center justify-between"
+            >
+              Mes favoris
+              {wishlistCount > 0 && (
+                <span className="h-5 min-w-5 px-1 rounded-full bg-primary text-primary-foreground text-[10px] font-semibold flex items-center justify-center">
+                  {wishlistCount}
+                </span>
+              )}
+            </Link>
           </nav>
         </div>
       )}
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   );
 }

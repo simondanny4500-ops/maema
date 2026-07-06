@@ -5,7 +5,8 @@ import { supabase } from "@/integrations/supabase/client";
 import { useCart, formatEUR } from "@/lib/cart";
 import { ProductCard } from "@/components/site/ProductCard";
 import { toast } from "sonner";
-import { Minus, Plus, ShoppingBag, Truck, RotateCcw, ShieldCheck, Check } from "lucide-react";
+import { Minus, Plus, ShoppingBag, Truck, RotateCcw, ShieldCheck, Check, Heart } from "lucide-react";
+import { useWishlist } from "@/lib/wishlist";
 
 export const Route = createFileRoute("/produit/$slug")({
   loader: async ({ params }) => {
@@ -43,6 +44,7 @@ function ProductPage() {
   const [qty, setQty] = useState(1);
   const [imageIdx, setImageIdx] = useState(0);
   const { add } = useCart();
+  const { toggle, has } = useWishlist();
   const [justAdded, setJustAdded] = useState(false);
   const price = product.sale_price ?? product.price;
   const image = product.images[imageIdx] ?? product.images[0] ?? "";
@@ -160,6 +162,18 @@ function ProductPage() {
                     {product.stock <= 0 ? "Rupture de stock" : "Ajouter au panier"}
                   </>
                 )}
+              </button>
+              <button
+                onClick={() =>
+                  toggle({ id: product.id, slug: product.slug, name: product.name, price, image })
+                }
+                aria-label={has(product.id) ? "Retirer des favoris" : "Ajouter aux favoris"}
+                className="shrink-0 h-[52px] w-[52px] flex items-center justify-center border border-border hover:border-primary transition-colors active:scale-90 duration-200"
+              >
+                <Heart
+                  size={18}
+                  className={has(product.id) ? "fill-primary text-primary animate-pop" : "text-foreground/60"}
+                />
               </button>
             </div>
 
