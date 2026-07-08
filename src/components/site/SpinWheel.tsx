@@ -9,6 +9,18 @@ const OPEN_DELAY_MS = 1000;
 const SPIN_DURATION_MS = 4600;
 const SEGMENT_ANGLE = 360 / WHEEL_PRIZES.length;
 
+function GiftIcon({ color }: { color: string }) {
+  return (
+    <g fill="none" stroke={color} strokeWidth={2.2} strokeLinecap="round" strokeLinejoin="round">
+      <rect x={-11} y={-3} width={22} height={16} rx={1.5} />
+      <rect x={-13} y={-9} width={26} height={7} rx={1.5} />
+      <line x1={0} y1={-9} x2={0} y2={13} />
+      <path d="M 0 -9 C -8 -9 -9 -16 -3.5 -16 C -0.5 -16 0 -12 0 -9 Z" />
+      <path d="M 0 -9 C 8 -9 9 -16 3.5 -16 C 0.5 -16 0 -12 0 -9 Z" />
+    </g>
+  );
+}
+
 function polarPoint(cx: number, cy: number, r: number, angleDeg: number) {
   const rad = (angleDeg * Math.PI) / 180;
   return { x: cx + r * Math.sin(rad), y: cy - r * Math.cos(rad) };
@@ -89,22 +101,41 @@ export function SpinWheel() {
           const start = i * SEGMENT_ANGLE;
           const end = start + SEGMENT_ANGLE;
           const mid = start + SEGMENT_ANGLE / 2;
-          const labelPoint = polarPoint(cx, cy, r * 0.62, mid);
+          const point = polarPoint(cx, cy, r * 0.66, mid);
+          const textColor = prize.isWin ? "oklch(0.99 0.005 80)" : "oklch(0.40 0.03 50)";
           return (
-            <g key={prize.id}>
-              <path d={segmentPath(cx, cy, r, start, end)} fill={prize.color} stroke="oklch(0.99 0.005 80)" strokeWidth="1.5" />
-              <text
-                x={labelPoint.x}
-                y={labelPoint.y}
-                transform={`rotate(${mid}, ${labelPoint.x}, ${labelPoint.y})`}
-                textAnchor="middle"
-                fontSize="11.5"
-                fontWeight={prize.id === "free_perfume" ? 700 : 600}
-                fill={prize.id === "lost" ? "oklch(0.48 0.02 50)" : "oklch(0.99 0.005 80)"}
-                style={{ fontFamily: "'Cormorant Garamond', Georgia, serif" }}
-              >
-                {prize.shortLabel}
-              </text>
+            <g key={`${prize.id}-${i}`}>
+              <path d={segmentPath(cx, cy, r, start, end)} fill={prize.color} stroke="oklch(0.99 0.005 80)" strokeWidth="2" />
+              <g transform={`translate(${point.x}, ${point.y}) rotate(${mid})`}>
+                {prize.isWin && (
+                  <g transform="translate(0, -30) scale(1.15)">
+                    <GiftIcon color={textColor} />
+                  </g>
+                )}
+                {prize.isWin ? (
+                  <text
+                    textAnchor="middle"
+                    fontSize="15"
+                    fontWeight={800}
+                    fill={textColor}
+                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", letterSpacing: "0.02em" }}
+                  >
+                    <tspan x="0" y="4">PARFUM</tspan>
+                    <tspan x="0" y="20">OFFERT</tspan>
+                  </text>
+                ) : (
+                  <text
+                    textAnchor="middle"
+                    y="6"
+                    fontSize="22"
+                    fontWeight={700}
+                    fill={textColor}
+                    style={{ fontFamily: "'Cormorant Garamond', Georgia, serif", letterSpacing: "0.03em" }}
+                  >
+                    RIEN
+                  </text>
+                )}
+              </g>
             </g>
           );
         })}
@@ -141,7 +172,7 @@ export function SpinWheel() {
               </p>
             </div>
 
-            <div className="relative mx-auto w-64 h-64 md:w-72 md:h-72 select-none">
+            <div className="relative mx-auto w-72 h-72 md:w-80 md:h-80 select-none">
               <div
                 className="absolute left-1/2 -top-2 -translate-x-1/2 z-10"
                 style={{ filter: "drop-shadow(0 4px 6px rgba(0,0,0,0.25))" }}
