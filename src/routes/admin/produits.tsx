@@ -64,6 +64,7 @@ function AdminProducts() {
               <th className="text-left px-4 py-3">Produit</th>
               <th className="text-left px-4 py-3">Catégorie</th>
               <th className="text-right px-4 py-3">Prix</th>
+              <th className="text-right px-4 py-3">Format</th>
               <th className="text-right px-4 py-3">Stock</th>
               <th className="text-left px-4 py-3">Statut</th>
               <th className="px-4 py-3" />
@@ -87,6 +88,7 @@ function AdminProducts() {
                     <span><span className="text-primary">{formatEUR(p.sale_price)}</span> <span className="line-through text-xs text-muted-foreground">{formatEUR(p.price)}</span></span>
                   ) : formatEUR(p.price)}
                 </td>
+                <td className="px-4 py-3 text-right text-muted-foreground">{p.volume_ml ? `${p.volume_ml} ml` : "—"}</td>
                 <td className={`px-4 py-3 text-right ${p.stock <= 3 ? "text-destructive" : ""}`}>{p.stock}</td>
                 <td className="px-4 py-3"><span className={`text-xs uppercase tracking-widest ${p.status === "published" ? "text-primary" : "text-muted-foreground"}`}>{p.status === "published" ? "Publié" : "Brouillon"}</span></td>
                 <td className="px-4 py-3 text-right">
@@ -119,6 +121,7 @@ function ProductForm({ product, categories, onClose }: { product: any; categorie
     price: product.price ?? 0,
     sale_price: product.sale_price ?? "",
     stock: product.stock ?? 0,
+    volume_ml: product.volume_ml ?? "",
     category_id: product.category_id ?? "",
     status: product.status ?? "published",
     is_featured: product.is_featured ?? false,
@@ -135,6 +138,7 @@ function ProductForm({ product, categories, onClose }: { product: any; categorie
       price: Number(f.price),
       sale_price: f.sale_price === "" ? null : Number(f.sale_price),
       stock: Number(f.stock),
+      volume_ml: f.volume_ml === "" ? null : Number(f.volume_ml),
       images: f.images.split("\n").map((s: string) => s.trim()).filter(Boolean),
       category_id: f.category_id || null,
       slug: f.slug || f.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, ""),
@@ -160,6 +164,10 @@ function ProductForm({ product, categories, onClose }: { product: any; categorie
           <F label="Prix (€)" type="number" step="0.01" value={f.price} onChange={(v) => setF({ ...f, price: v })} required />
           <F label="Prix promo (€)" type="number" step="0.01" value={f.sale_price} onChange={(v) => setF({ ...f, sale_price: v })} />
           <F label="Stock" type="number" value={f.stock} onChange={(v) => setF({ ...f, stock: v })} required />
+          <div>
+            <F label="Contenance (ml)" type="number" value={f.volume_ml} onChange={(v) => setF({ ...f, volume_ml: v })} placeholder="ex: 35, 50, 100" />
+            <p className="text-[10px] text-muted-foreground mt-1">Les produits en 35 ml sont éligibles au parfum offert de la roue de la chance.</p>
+          </div>
           <div>
             <label className="text-xs uppercase tracking-widest text-muted-foreground">Catégorie</label>
             <select value={f.category_id} onChange={(e) => setF({ ...f, category_id: e.target.value })} className="mt-1 w-full bg-background border border-border px-3 py-2.5">

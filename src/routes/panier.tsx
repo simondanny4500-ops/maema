@@ -1,6 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useCart, formatEUR } from "@/lib/cart";
-import { Minus, Plus, X, ShoppingBag, ArrowRight } from "lucide-react";
+import { useWheel } from "@/lib/wheel";
+import { GiftPerfumeSelector } from "@/components/site/GiftPerfumeSelector";
+import { Minus, Plus, X, ShoppingBag, ArrowRight, Gift } from "lucide-react";
 
 export const Route = createFileRoute("/panier")({
   head: () => ({ meta: [{ title: "Panier — Memma & Maman" }] }),
@@ -8,9 +10,12 @@ export const Route = createFileRoute("/panier")({
 });
 
 function CartPage() {
-  const { items, updateQty, remove, subtotal, count } = useCart();
+  const { items, updateQty, remove, subtotal, count, hasGift } = useCart();
+  const { hasUnclaimedPerfumeGift } = useWheel();
   const shipping = subtotal >= 50 || subtotal === 0 ? 0 : 4.9;
   const total = subtotal + shipping;
+  const hasRealItems = items.some((i) => !i.isGift);
+  const showGiftSelector = hasUnclaimedPerfumeGift && hasRealItems && !hasGift;
 
   if (count === 0) {
     return (
@@ -29,26 +34,40 @@ function CartPage() {
     <section className="max-w-6xl mx-auto px-5 md:px-10 py-16">
       <h1 className="font-serif text-4xl md:text-5xl mb-10">Votre panier</h1>
 
+      {showGiftSelector && <GiftPerfumeSelector />}
+
       <div className="grid md:grid-cols-3 gap-10">
         <div className="md:col-span-2 space-y-4">
           {items.map((item) => (
-            <div key={item.id} className="flex gap-4 bg-card border border-border p-4 animate-fade hover-lift">
+            <div key={`${item.id}-${item.isGift ? "gift" : "std"}`} className={`flex gap-4 bg-card border p-4 animate-fade hover-lift ${item.isGift ? "border-primary/50 bg-[oklch(0.97_0.012_70)]" : "border-border"}`}>
               <img src={item.image} alt={item.name} className="w-24 h-28 object-cover" />
               <div className="flex-1 flex flex-col justify-between">
                 <div>
-                  <Link to="/produit/$slug" params={{ slug: item.slug }} className="font-serif text-lg hover:text-primary">{item.name}</Link>
-                  <p className="text-sm text-primary mt-1">{formatEUR(item.price)}</p>
+                  {item.isGift && (
+                    <span className="inline-flex items-center gap-1 bg-primary text-primary-foreground text-[9px] font-semibold uppercase tracking-widest px-1.5 py-0.5 rounded-sm mb-1.5">
+                      <Gift size={10} /> Offert — 35 ml
+                    </span>
+                  )}
+                  <Link to="/produit/$slug" params={{ slug: item.slug }} className="block font-serif text-lg hover:text-primary">{item.name}</Link>
+                  <p className="text-sm text-primary mt-1">{item.isGift ? "Offert" : formatEUR(item.price)}</p>
                 </div>
-                <div className="flex items-center justify-between mt-3">
-                  <div className="flex items-center border border-border">
-                    <button onClick={() => updateQty(item.id, item.quantity - 1)} className="px-2 py-1.5 hover:bg-muted active:scale-90 transition-transform"><Minus size={12} /></button>
-                    <span key={item.quantity} className="px-3 text-sm animate-pop">{item.quantity}</span>
-                    <button onClick={() => updateQty(item.id, item.quantity + 1)} className="px-2 py-1.5 hover:bg-muted active:scale-90 transition-transform"><Plus size={12} /></button>
+                {item.isGift ? (
+                  <div className="flex items-center justify-between mt-3">
+                    <span className="text-xs text-muted-foreground">Quantité : 1</span>
+                    <button onClick={() => remove(item.id)} className="text-muted-foreground hover:text-destructive hover:rotate-90 p-2 transition-all duration-300"><X size={16} /></button>
                   </div>
-                  <button onClick={() => remove(item.id)} className="text-muted-foreground hover:text-destructive hover:rotate-90 p-2 transition-all duration-300"><X size={16} /></button>
-                </div>
+                ) : (
+                  <div className="flex items-center justify-between mt-3">
+                    <div className="flex items-center border border-border">
+                      <button onClick={() => updateQty(item.id, item.quantity - 1)} className="px-2 py-1.5 hover:bg-muted active:scale-90 transition-transform"><Minus size={12} /></button>
+                      <span key={item.quantity} className="px-3 text-sm animate-pop">{item.quantity}</span>
+                      <button onClick={() => updateQty(item.id, item.quantity + 1)} className="px-2 py-1.5 hover:bg-muted active:scale-90 transition-transform"><Plus size={12} /></button>
+                    </div>
+                    <button onClick={() => remove(item.id)} className="text-muted-foreground hover:text-destructive hover:rotate-90 p-2 transition-all duration-300"><X size={16} /></button>
+                  </div>
+                )}
               </div>
-              <div className="text-right font-medium">{formatEUR(item.price * item.quantity)}</div>
+              <div className="text-right font-medium">{item.isGift ? "0,00 €" : formatEUR(item.price * item.quantity)}</div>
             </div>
           ))}
         </div>

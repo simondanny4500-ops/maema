@@ -258,6 +258,7 @@ export type Database = {
           status: Database["public"]["Enums"]["product_status"]
           stock: number
           updated_at: string
+          volume_ml: number | null
           weight_g: number | null
         }
         Insert: {
@@ -278,6 +279,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["product_status"]
           stock?: number
           updated_at?: string
+          volume_ml?: number | null
           weight_g?: number | null
         }
         Update: {
@@ -298,6 +300,7 @@ export type Database = {
           status?: Database["public"]["Enums"]["product_status"]
           stock?: number
           updated_at?: string
+          volume_ml?: number | null
           weight_g?: number | null
         }
         Relationships: [

@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { CartProvider } from "@/lib/cart";
 import { WishlistProvider } from "@/lib/wishlist";
+import { WheelProvider } from "@/lib/wheel";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { Toaster } from "@/components/ui/sonner";
@@ -21,6 +22,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useScrollReveal } from "@/hooks/use-scroll-reveal";
 import { IntroAnimation } from "@/components/site/IntroAnimation";
 import { CookieBanner } from "@/components/site/CookieBanner";
+import { SpinWheel } from "@/components/site/SpinWheel";
 
 
 
@@ -149,12 +151,15 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <CartProvider>
         <WishlistProvider>
-          <IntroAnimation />
-          <SiteChrome>
-            <Outlet />
-          </SiteChrome>
-          <Toaster />
-          <CookieBanner />
+          <WheelProvider>
+            <IntroAnimation />
+            <SiteChrome>
+              <Outlet />
+            </SiteChrome>
+            <Toaster />
+            <CookieBanner />
+            <SpinWheel />
+          </WheelProvider>
         </WishlistProvider>
       </CartProvider>
     </QueryClientProvider>
